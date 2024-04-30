@@ -68,7 +68,7 @@ class DNN():
             model = model_()
 
         if 'resnet' in conf.args.model:
-            if conf.args.dataset not in ['imagenet', 'imagenetoutdist', 'imagenetA', 'imagenetR']: # imagenetA and imagenetR keeps predicted classes to 1000
+            if conf.args.dataset not in ['imagenet', 'imagenetoutdist', 'imagenetR']: # imagenetR keeps predicted classes to 1000
                 num_feats = model.fc.in_features
                 if conf.args.outdist == "divide":
                     num_class = conf.args.opt['num_class'] - len(conf.args.outdist_class)
@@ -95,7 +95,7 @@ class DNN():
         ##########################################################
 
         # Important: some TTA methods would overwrite this optimizer
-        if conf.args.dataset in ['cifar10', 'cifar100', 'cifar10outdist', 'cifar100outdist', 'tinyimagenet', 'imagenet', 'imagenetoutdist', 'imagenetA', 'imagenetR']:
+        if conf.args.dataset in ['cifar10', 'cifar100', 'cifar10outdist', 'cifar100outdist', 'tinyimagenet', 'imagenet', 'imagenetoutdist', 'imagenetR']:
             self.optimizer = torch.optim.SGD(
                 self.net.parameters(),
                 conf.args.opt['learning_rate'],
@@ -721,8 +721,6 @@ class DNN():
                 dropout = 0.3
             elif conf.args.dataset == "imagenetoutdist":
                 dropout = 0.2
-            elif conf.args.dataset == "imagenetA":
-                dropout = 0.7
             elif conf.args.dataset == "imagenetR":
                 dropout = 0.3
             else:
@@ -910,8 +908,8 @@ class DNN():
         elif conf.args.dataset == "cifar100outdist":
             MAX_ENTROPY = 4.6052  # cifar100
             N_CLASS = 100
-        elif conf.args.dataset in ["imagenetA", "imagenetR"] :
-            MAX_ENTROPY = 5.2983  # imagenetA, imagenetR
+        elif conf.args.dataset == "imagenetR" :
+            MAX_ENTROPY = 5.2983  # imagenetR
             N_CLASS = 200
         else:
             MAX_ENTROPY = 6.9078  # imagenet
