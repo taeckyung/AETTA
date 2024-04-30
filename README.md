@@ -4,7 +4,7 @@ This is the PyTorch Implementation of "AETTA: Label-Free Accuracy Estimation for
 
 ## Implementation
 
-We mainly implement AETTA and other baselines in [`learner/dnn.py`](learner/dnn.py). Please refer to the function [`aetta()`](learner/dnn.py#L896) in the file for AETTA implementation.
+We mainly implement AETTA and other baselines in [`learner/dnn.py`](learner/dnn.py). Please refer to the function [`aetta()`](learner/dnn.py#L894) in the file for AETTA implementation.
 
 ## Installation Guide
 
