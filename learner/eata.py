@@ -3,7 +3,6 @@ import conf
 from data_loader.CIFAR100Dataset import CIFAR100Dataset
 from data_loader.CIFAR10Dataset import CIFAR10Dataset
 from data_loader.IMAGENETDataset import ImageNetDataset
-from data_loader.IMAGENETADataset import ImageNetADataset
 from data_loader.IMAGENETRDataset import ImageNetRDataset
 
 from utils.loss_functions import *
@@ -98,8 +97,6 @@ class EATA(ETA):
             fisher_dataset = CIFAR100Dataset(file="", domains=[corruption_list_[0]], max_source=9999, transform='val')
         elif conf.args.dataset == "imagenet":
             fisher_dataset = ImageNetDataset(file="", domain=corruption_list_[0], max_source=9999, transform='val')
-        elif conf.args.dataset == "imagenetA":
-            fisher_dataset = ImageNetADataset(file="", domain=corruption_list_[0], max_source=9999, transform='val')
         elif conf.args.dataset == "imagenetR":
             fisher_dataset = ImageNetRDataset(file="", domain=corruption_list_[0], max_source=9999, transform='val')
         else:

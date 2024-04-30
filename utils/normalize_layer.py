@@ -35,7 +35,7 @@ def get_normalize_layer(dataset):
         return NormalizeLayer(_CIFAR10_MEAN, _CIFAR10_STDDEV)
     elif dataset in ["cifar100", "cifar100outdist"]:
         return NormalizeLayer(_CIFAR100_MEAN, _CIFAR100_STDDEV)
-    elif dataset in ['imagenet', 'imagenetoutdist', 'imagenetA', 'imagenetR']:
+    elif dataset in ['imagenet', 'imagenetoutdist', 'imagenetR']:
         return NormalizeLayer(_IMAGENET_MEAN, _IMAGENET_STDDEV)
     else:
         return None
@@ -47,7 +47,7 @@ def get_normalize_std(dataset):
         return _CIFAR10_STDDEV
     elif dataset in ["cifar100", "cifar100outdist"]:
         return _CIFAR100_MEAN, _CIFAR100_STDDEV
-    elif dataset in ['imagenet', 'imagenetoutdist', 'imagenetA', 'imagenetR']:
+    elif dataset in ['imagenet', 'imagenetoutdist', 'imagenetR']:
         return _IMAGENET_MEAN, _IMAGENET_STDDEV
     else:
         return None

@@ -2,6 +2,10 @@
 
 This is the PyTorch Implementation of "AETTA: Label-Free Accuracy Estimation for Test-Time Adaptation (CVPR '24)" by [Taeckyung Lee](https://taeckyung.github.io/), Sorn Chottananurak, [Taesik Gong](https://taesikgong.com/), and [Sung-Ju Lee](https://sites.google.com/site/wewantsj/).
 
+## Implementation
+
+We mainly implement AETTA and other baselines in [`learner/dnn.py`](learner/dnn.py). Please refer to the function [`aetta()`](learner/dnn.py#L896) in the file for AETTA implementation.
+
 ## Installation Guide
 
 1. Download or clone our repository

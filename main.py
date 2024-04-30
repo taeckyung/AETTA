@@ -76,8 +76,6 @@ def main():
         opt = conf.CIFAR10Opt
     elif conf.args.dataset in ['imagenet', 'imagenetoutdist']:
         opt = conf.IMAGENET_C
-    elif 'imagenetA' in conf.args.dataset:
-        opt = conf.IMAGENET_A
     elif 'imagenetR' in conf.args.dataset:
         opt = conf.IMAGENET_R
     else:
