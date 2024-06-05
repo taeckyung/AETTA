@@ -1,6 +1,6 @@
 # AETTA: Label-Free Accuracy Estimation for Test-Time Adaptation (CVPR '24)
 
-This is the PyTorch Implementation of "AETTA: Label-Free Accuracy Estimation for Test-Time Adaptation (CVPR '24)" by [Taeckyung Lee](https://taeckyung.github.io/), Sorn Chottananurak, [Taesik Gong](https://taesikgong.com/), and [Sung-Ju Lee](https://sites.google.com/site/wewantsj/).
+This is the official PyTorch Implementation of "AETTA: Label-Free Accuracy Estimation for Test-Time Adaptation (CVPR '24)" by [Taeckyung Lee](https://taeckyung.github.io/), Sorn Chottananurak, [Taesik Gong](https://taesikgong.com/), and [Sung-Ju Lee](https://sites.google.com/site/wewantsj/).
 
 ## Implementation
 
