@@ -673,23 +673,6 @@ class DNN():
         c_den = torch.linalg.vector_norm(std_prev - std_curr) / 3
         return c_den + 1  # To fit range [1, )
 
-    def dropout_inference(self, x, n_iter, dropout, net=None):
-        if net is None:
-            net = self.net
-
-        predictions = []
-        with torch.no_grad():
-            for _ in range(n_iter):
-                pred = net[1]((net[0](x)), dropout=dropout)  # batch_size, n_classes
-                pred = F.softmax(pred, dim=1)
-                predictions.append(pred)
-        predictions = torch.stack(predictions, dim=1)  # batch_size, n_iter, n_classes
-        pred_class = torch.argmax(predictions, dim=2)
-        mean_pred = torch.mean(predictions, dim=1)
-        mean_pred_class = torch.argmax(mean_pred, dim=1)
-        std_pred = torch.std(predictions, dim=1)
-        return std_pred[:, mean_pred_class].diagonal(), pred_class, mean_pred, std_pred
-
     def evaluate_consistency_body(self, curr_feats):
         if len(curr_feats) == 0:
             return None, None
@@ -712,6 +695,9 @@ class DNN():
         return equal_rate, conf_dist
 
     def evaluate_dropout(self, feats, net, n_iter=10, dropout=0.5):
+        if net is None:
+            net = self.net
+            
         curr_pred, curr_conf, _, _, _, curr_softmax, _ = self.model_inference(feats, net=net)
 
         if dropout < 0:
@@ -726,7 +712,18 @@ class DNN():
             else:
                 raise NotImplementedError
 
-        _, pred, mean, std = self.dropout_inference(feats, n_iter=n_iter, dropout=dropout, net=net)
+        # Dropout inference sampling
+        predictions = []
+        with torch.no_grad():
+            for _ in range(n_iter):
+                pred = net[1]((net[0](feats)), dropout=dropout)  # batch_size, n_classes
+                pred = F.softmax(pred, dim=1)
+                predictions.append(pred)
+        predictions = torch.stack(predictions, dim=1)  # batch_size, n_iter, n_classes
+        pred = torch.argmax(predictions, dim=2)
+        mean = torch.mean(predictions, dim=1)
+        mean_pred_class = torch.argmax(mean_pred, dim=1)
+        std = torch.std(predictions, dim=1)
 
         conf_mean = mean[:, curr_pred].diagonal()
         conf_std = std[:, curr_pred].diagonal()
@@ -736,6 +733,7 @@ class DNN():
         total_avg_softmax = torch.mean(mean, dim=0)
         e_avg = (-total_avg_softmax * torch.log(total_avg_softmax + 1e-6)).sum()
 
+        # Prediction disagreement with dropouts
         match_ratio = (curr_pred.unsqueeze(dim=1).repeat(1, n_iter) == pred).sum(dim=1, dtype=float) / n_iter
         acc = match_ratio.mean()
         return acc.item(), mean_for_curr_pred.item(), std_for_curr_pred.item(), e_avg.item()
