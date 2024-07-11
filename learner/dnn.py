@@ -722,7 +722,7 @@ class DNN():
         predictions = torch.stack(predictions, dim=1)  # batch_size, n_iter, n_classes
         pred = torch.argmax(predictions, dim=2)
         mean = torch.mean(predictions, dim=1)
-        mean_pred_class = torch.argmax(mean_pred, dim=1)
+        #mean_pred_class = torch.argmax(mean_pred, dim=1)
         std = torch.std(predictions, dim=1)
 
         conf_mean = mean[:, curr_pred].diagonal()
